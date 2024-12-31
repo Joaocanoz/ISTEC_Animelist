@@ -89,7 +89,7 @@ Para testar a API, siga estas etapas:
 }
 ```
 
-### Deletar um Anime
+### Apagar um Anime
 
 - **Endpoint:** `DELETE /animes/{id}`
 - **Descrição:** Não é necessário um corpo de requisição para deletar um anime. A URL deve conter o ID do anime a ser deletado.
@@ -132,7 +132,7 @@ Para testar a API, siga estas etapas:
   "reviews": []
 }
 ```
-### Deletar um Manga
+### Apagar um Manga
 
 - **Endpoint:** `DELETE /mangas/{id}`
 - **Descrição:** Não é necessário um corpo de requisição para deletar um manga. A URL deve conter o ID do manga a ser deletado.
@@ -308,7 +308,16 @@ components:
       required:
         - email
         - password
-
+    RegisterCredentials:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
 paths:
   /animes:
     get:
@@ -520,6 +529,25 @@ paths:
                 $ref: '#/components/schemas/LoginCredentials'
         '401':
           description: Unauthorized
+
+  /register:
+    post:
+      summary: Register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterCredentials'
+      responses:
+        '201':
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterCredentials'
+        '400':
+          description: Bad request
 
   /protected:
     get:
